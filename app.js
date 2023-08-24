@@ -1,3 +1,8 @@
+// Name: Justin Barlowe
+// Title: app.js
+// Description: RESTful API app file for composer collection
+// Date: 8/24/2023
+
 //require statements
 const express = require('express');
 const http = require('http');
@@ -25,7 +30,7 @@ const options = {
             version: '1.0.0',
         },
     },
-    apis: ['./routes/*.js'],
+    apis: ['./docs/barlowe-composers.yaml'],
 };
 
 //openapiSpecification
