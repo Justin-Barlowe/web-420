@@ -1,50 +1,58 @@
 // Name: Justin Barlowe
-// Title: app.js
-// Description: RESTful API app file for composer collection
-// Date: 8/24/2023
+// Title: barlowe-composer.js
+// Description: App entry point
+// Date: 8/31/2023
 
-//require statements
+// Require statements
 const express = require('express');
 const http = require('http');
 const swaggerUi = require('swagger-ui-express');
-const swaggerjsdoc = require('swagger-jsdoc');
+const swaggerJsdoc = require('swagger-jsdoc');
 const mongoose = require('mongoose');
+const composerAPI = require('./routes/barlowe-composer-routes');
+const Composer = require('./models/barlowe-composer');
 
-//App
+// App configuration and port assignment
 const app = express();
-
-//Port assignment
 const port = process.env.PORT || 3000;
 
-//Json
+// Middleware
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: true }));
 
-//options
+// MongoDB connection string
+const conn = 'mongodb+srv://web420_user:waduhek@bellevueuniversity.w2mknhu.mongodb.net/web420DB';
+
+// Connect to MongoDB
+mongoose
+  .connect(conn)
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((err) => {
+    console.log("Not Connected to MongoDB ERROR! ", err);
+  });
+
+  // Options for the swagger docs
 const options = {
-    definition: {
-        openapi: '3.0.0',
-        info: {
-            title: 'WEB 420 RESTful APIs',
-            version: '1.0.0',
-        },
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'WEB 420 RESTful APIs',
+      version: '1.0.0',
     },
-    apis: ['./docs/barlowe-composers.yaml'],
+  },
+  apis: ['./docs/barlowe-composers.yaml'],
 };
 
-//openapiSpecification
-const openapiSpecification = swaggerjsdoc(options); 
+// Initialize swagger-jsdoc
+const openapiSpecification = swaggerJsdoc(options);
 
-//app 
+// Setup swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
+app.use('/api', composerAPI);
 
-//get request
-app.get('/', (req, res) => {
-    res.redirect('/api-docs');
-  });
-  
-//http server
-http.createServer(app).listen(port, function() {
-    console.log(`Application started and listening on port: ${port}`);
+// Server creation
+http.createServer(app).listen(port, function () {
+  console.log(`Application started and listening on port: ${port}`);
 });

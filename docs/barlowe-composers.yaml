@@ -15,7 +15,7 @@ tags:
 
 # API Paths
 paths:
-  /composers:
+  /api/composers:
   # GET operation for all composers
     get:
       tags:
@@ -51,7 +51,7 @@ paths:
         '501':
           description: MongoDB Exception
   # GET operation for a specific composer by ID
-  /composers/{id}:
+  /api/composers/{id}:
     get:
       tags:
         - Composers
