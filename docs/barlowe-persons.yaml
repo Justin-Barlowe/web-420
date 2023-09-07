@@ -1,0 +1,63 @@
+# Name: Justin Barlowe
+# Title: barlowe-persons.yaml
+# Description: YAML file for persons API
+# Date: 9/7/2023
+
+# Specify the OpenAPI version and info
+openapi: 3.0.0
+info:
+  title: Persons API
+  version: 1.0.0
+
+# Tags to operations
+tags:
+  - name: People
+
+# API Paths
+paths:
+  /api/people:
+  # GET operation for all persons
+    get:
+      tags:
+        - People
+      summary: Retrieve all People
+      responses:
+        '200':
+          description: Successful operation
+        '500':
+          description: Server Exception
+        '501':
+          description: MongoDB Exception
+    # POST operation for creating a composer
+    post:
+      tags:
+        - People
+      summary: Creates a person
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                dependents:
+                  type: array
+                  items:
+                    type: string
+                roles:
+                  type: array
+                  items:
+                    type: string
+                birthDate:
+                  type: string
+                
+      responses:
+        '200':
+          description: Successful operation
+        '500':
+          description: Server Exception
+        '501':
+          description: MongoDB Exception
