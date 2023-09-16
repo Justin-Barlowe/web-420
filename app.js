@@ -2,6 +2,9 @@
 // Title: barlowe-composer.js
 // Description: App entry point
 // Date: 8/31/2023
+// Last Modified: 9/11/2023
+
+// Start server with npm start
 
 // Require statements
 const express = require('express');
@@ -13,6 +16,7 @@ const composerAPI = require('./routes/barlowe-composer-routes');
 const Composer = require('./models/barlowe-composer');
 const Person = require('./models/barlowe-person');
 const personAPI = require('./routes/barlowe-person-routes');
+const userAPI = require('./routes/barlowe-session-routes');
 
 // App configuration and port assignment
 const app = express();
@@ -44,7 +48,7 @@ const options = {
       version: '1.0.0',
     },
   },
-  apis: ['./docs/barlowe-composers.yaml', './docs/barlowe-persons.yaml'],
+  apis: ['./docs/barlowe-composers.yaml', './docs/barlowe-persons.yaml', './docs/barlowe-users.yaml'],
 };
 
 // Initialize swagger-jsdoc
@@ -54,8 +58,11 @@ const openapiSpecification = swaggerJsdoc(options);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 app.use('/api', composerAPI);
 app.use('/api', personAPI);
+app.use('/api', userAPI);
 
 // Server creation
 http.createServer(app).listen(port, function () {
   console.log(`Application started and listening on port: ${port}`);
+  console.log('To test with Swagger, visit: http://localhost:3000/api-docs/');
+  console.log('To terminate the server, press Ctrl + C');
 });

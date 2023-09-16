@@ -1,0 +1,72 @@
+# Name: Justin Barlowe
+# Title: barlowe-users.yaml
+# Description: YAML file for users API
+# Date: 9/11/2023
+
+# Specify the OpenAPI version and info
+openapi: 3.0.0
+info:
+  title: User API
+  version: 1.0.0
+
+# Tags to operations
+tags:
+  - name: User
+
+# API Paths
+paths:
+  /api/users:
+    # POST operation for creating a user
+    post:
+      tags:
+        - User
+      summary: Registers a new user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userName:
+                  type: string
+                password:
+                  type: string
+                emailAddress:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Registered user
+        '401':
+          description: Username is already in use
+        '500':
+          description: Server Exception
+        '501':
+          description: MongoDB Exception
+
+  /api/login:
+    # POST operation for logging in a user
+    post:
+      tags:
+        - User
+      summary: Logs in a user by checking their username and password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userName:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: User logged in
+        '401':
+          description: Invalid username and/or password
+        '500':
+          description: Server Exception
+        '501':
+          description: MongoDB Exception
