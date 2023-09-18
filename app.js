@@ -4,7 +4,6 @@
 // Date: 8/31/2023
 // Last Modified: 9/11/2023
 
-// Start server with npm start
 
 // Require statements
 const express = require('express');
@@ -62,7 +61,7 @@ app.use('/api', userAPI);
 
 // Server creation
 http.createServer(app).listen(port, function () {
-  console.log(`Application started and listening on port: ${port}`);
+  console.log(`Server started and listening on port: ${port}`);
   console.log('To test with Swagger, visit: http://localhost:3000/api-docs/');
   console.log('To terminate the server, press Ctrl + C');
 });
