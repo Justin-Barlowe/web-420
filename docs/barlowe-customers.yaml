@@ -1,0 +1,105 @@
+# Name: Justin Barlowe
+# Title: barlowe-shopper.yaml
+# Description: YAML file for customer and invoice operations
+# Date Created: 9/18/2023
+
+# Specify the OpenAPI version and info
+openapi: 3.0.0
+info:
+  title: Customer and Invoice API
+  version: 1.0.0
+
+# Tags for operations
+tags:
+  - name: Customers
+  - name: Invoices
+
+# API Paths
+paths:
+  /api/customers:
+    post:
+      tags:
+        - Customers
+      summary: Create a new customer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                userName:
+                  type: string
+      responses:
+        '200':
+          description: Customer added to MongoDB
+        '500':
+          description: Server Exception
+        '501':
+          description: MongoDB Exception
+
+  /api/customers/{username}/invoices:
+    post:
+      tags:
+        - Invoices
+      summary: Create an invoice for a specific user
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                subtotal:
+                  type: number
+                tax:
+                  type: number
+                dateCreated:
+                  type: string
+                  format: date
+                dateShipped:
+                  type: string
+                  format: date
+                lineItems:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      price:
+                        type: number
+                      quantity:
+                        type: number
+      responses:
+        '200':
+          description: Invoice added to MongoDB
+        '500':
+          description: Server Exception
+        '501':
+          description: MongoDB Exception
+    get:
+      tags:
+        - Invoices
+      summary: Retrieve all invoices for a specific user
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Invoices retrieved successfully
+        '500':
+          description: Server Exception
+        '501':
+          description: MongoDB Exception
