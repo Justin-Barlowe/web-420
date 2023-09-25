@@ -2,7 +2,7 @@
 // Title: barlowe-composer.js
 // Description: App entry point
 // Date: 8/31/2023
-// Last Modified: 9/18/2023
+// Last Modified: 9/25/2023
 
 
 // Require statements

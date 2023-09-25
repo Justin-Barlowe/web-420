@@ -2,6 +2,7 @@
 # Title: barlowe-composers.yaml
 # Description: YAML file for composers API
 # Date: 8/24/2023
+# Updated: 9/25/2023
 
 # Specify the OpenAPI version and info
 openapi: 3.0.0
@@ -16,7 +17,7 @@ tags:
 # API Paths
 paths:
   /api/composers:
-  # GET operation for all composers
+    # GET operation for all composers
     get:
       tags:
         - Composers
@@ -50,7 +51,7 @@ paths:
           description: Server Exception
         '501':
           description: MongoDB Exception
-  # GET operation for a specific composer by ID
+  # GET operation for a specific composer
   /api/composers/{id}:
     get:
       tags:
@@ -65,6 +66,54 @@ paths:
       responses:
         '200':
           description: Successful operation
+        '500':
+          description: Server Exception
+        '501':
+          description: MongoDB Exception
+    # PUT operation for updating a specific composer
+    put:
+      tags:
+        - Composers
+      summary: Update a composer by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+      responses:
+        '200':
+          description: Successful operation, composer updated
+        '401':
+          description: Invalid composerId
+        '500':
+          description: Server Exception
+        '501':
+          description: MongoDB Exception
+    # DELETE operation for deleting a specific composer
+    delete:
+      tags:
+        - Composers
+      summary: Delete a composer by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation, composer deleted
         '500':
           description: Server Exception
         '501':
