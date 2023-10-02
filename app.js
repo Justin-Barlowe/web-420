@@ -12,13 +12,14 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const mongoose = require('mongoose');
 
-//API spciifc require statements
+//API specific require statements
 const composerAPI = require('./routes/barlowe-composer-routes');
 const Composer = require('./models/barlowe-composer');
 const Person = require('./models/barlowe-person');
 const personAPI = require('./routes/barlowe-person-routes');
 const userAPI = require('./routes/barlowe-session-routes');
 const customerAPI = require('./routes/barlowe-node-shopper-routes');
+const teamAPI = require('./routes/barlowe-team-routes');
 
 // App configuration and port assignment
 const app = express();
@@ -50,10 +51,12 @@ const options = {
       version: '1.0.0',
     },
   },
-  apis: ['./docs/barlowe-composers.yaml',
+  apis: ['./docs/barlowe-team.yaml',
+        './docs/barlowe-composers.yaml',
          './docs/barlowe-persons.yaml',
          './docs/barlowe-users.yaml',
-         './docs/barlowe-customers.yaml'],
+         './docs/barlowe-customers.yaml'
+         ],
 };
 
 // Initialize swagger-jsdoc
@@ -61,10 +64,12 @@ const openapiSpecification = swaggerJsdoc(options);
 
 // Setup swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
+app.use('/api', teamAPI);
 app.use('/api', composerAPI);
 app.use('/api', personAPI);
 app.use('/api', userAPI);
 app.use('/api', customerAPI);
+
 
 // Server creation
 http.createServer(app).listen(port, function () {
